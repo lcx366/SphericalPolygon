@@ -15,8 +15,8 @@ class Sphericalpolygon(object):
 
     - methods:
         - contains_points: determine if a single point or multiple points are inside the spherical polygon.
-        - area: calculate the area of the spherical polygon.
-        - inertia: calculate the inertia tensor of the spherical polygon.
+        - area: calculate the area or mass of the spherical polygon.
+        - inertia: calculate the geometrial or physical moment of inertia tensor of the spherical polygon.
     '''
 
     def __init__(self,polygon):
