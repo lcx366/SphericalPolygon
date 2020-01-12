@@ -62,9 +62,9 @@ class Sphericalpolygon(object):
             np.array(flags)
             return flags   	
 
-    def area(self, R = 1):
+    def area(self, R = 1,rho = 1):
         '''
-        Calculate the area of the given spherical polygon over a sphere with a radius of R. 
+        Calculate the area or mass(if the area density is given) of a specific spherical polygon over a sphere with a radius of R. 
     
         Usage: 
         area = polygon.area()
@@ -72,7 +72,8 @@ class Sphericalpolygon(object):
 
         Parameters:
         R -> [optional, float, default = 1] sphere radius
-    
+        rho -> [optional, float, default = 1] area density of the spherical polygon
+        
         Outputs:
         area -> [float] Area of the spherical polygon. It is independent of how the vertices are arranged.
         ''' 
@@ -80,7 +81,7 @@ class Sphericalpolygon(object):
 
     def inertia(self, R = 1, rho = 1):
         '''
-        Calculate the inertia tensor of the given spherical polygon with an area density of rho over a sphere with a radius of R.
+        Calculate the geometrical or physical(if the area density is given) moment of inertia tensor of a specific spherical polygon over a sphere with a radius of R.
 
         Usage:
         inertia = polygon.inertia()
