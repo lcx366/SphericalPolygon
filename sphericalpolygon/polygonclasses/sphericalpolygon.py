@@ -77,7 +77,7 @@ class Sphericalpolygon(object):
         Outputs:
         area -> [float] Area of the spherical polygon. It is independent of how the vertices are arranged.
         ''' 
-        return polygon_area(self.polygon)*R**2
+        return polygon_area(self.polygon)*R**2*rho
 
     def inertia(self, R = 1, rho = 1):
         '''
