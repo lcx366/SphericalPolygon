@@ -60,7 +60,7 @@ print(polygon.area(6378.137,81), ' Gt')
 
 ### Calculate the moment of inertia tensor
 
-Calculate the geometrical moment of inertia tensor of the spherical polygon over a unit sphere. The tensor is symmetrical and has six independent components. The first three components are located diagonally, corresponding to $M_{11}$, $M_{22}$, and $M_{33}$; the last three components correspond to $M_{12}$, $M_{13}$, and $M_{23}$.
+Calculate the geometrical moment of inertia tensor of the spherical polygon over a unit sphere. The tensor is symmetrical and has six independent components. The first three components are located diagonally, corresponding to $Q_{11}$, $Q_{22}$, and $Q_{33}$; the last three components correspond to $Q_{12}$, $Q_{13}$, and $Q_{23}$.
 
 
 ```python
