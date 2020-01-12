@@ -30,7 +30,7 @@ The results show that vertices of the spherical polygon are connected counterclo
 
 ### Calculate the area
 
-Calculate the area of the spherical polygon over a unit sphere.
+Calculate the area(or the solid angle) of the spherical polygon over a unit sphere.
 
 
 ```python
@@ -48,6 +48,14 @@ print(polygon.area(6378.137), ' km2')
 ```
 
     58280032.6500551  km2
+    
+Calculate the mass of the spherical polygon with an area density of 81Gt/km2 over a sphere with a radius of 6378.137km.
+
+```python
+print(polygon.area(6378.137,81), ' Gt')
+```
+
+    4720682644.654464  Gt
 
 
 ### Calculate the moment of inertia tensor
@@ -62,7 +70,7 @@ print(polygon.inertia())
     [ 1.32669154  1.17471081  0.36384484 -0.05095381  0.05246122  0.08126929]
 
 
-Calculate the moment of inertia tensor of the spherical polygon with an area density of 81Gt/km2 over a sphere with a radius of 6378.137km. 
+Calculate the physical moment of inertia tensor of the spherical polygon with an area density of 81Gt/km2 over a sphere with a radius of 6378.137km. 
 
 
 ```python
