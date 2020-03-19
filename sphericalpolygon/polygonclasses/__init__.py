@@ -8,7 +8,7 @@ Class structure:
     Sphericalpolygon
 
         - attributes:
-            - polygon: vertices of a closed spherical polygon in form of [[lat_0,lon_0],...,[lat_n,lon_n]]
+            - vertices: vertices of a closed spherical polygon in form of [[lat_0,lon_0],...,[lat_n,lon_n]]
             - lats: latitudes of the spherical polygon in degrees
             - lons: longitudes of the spherical polygon in degrees
             - arrangement: vertex arrangement; it can be counterclockwise or clockwise

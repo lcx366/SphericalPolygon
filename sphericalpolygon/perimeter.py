@@ -2,15 +2,15 @@ import numpy as np
 from astropy.coordinates import spherical_to_cartesian
 from astropy import units as u
 
-def polygon_perimeter(polygon): 
+def polygon_perimeter(vertices): 
     '''
     Calculate the perimeter of a spherical polygon over a unit sphere.
     
     Usage: 
-    perimeter = polygon_perimeter(polygon)
+    perimeter = polygon_perimeter(vertices)
 
     Inputs:
-    polygon -> [float 2d array] Vertices of a spherical polygon in format of [[lat_0,lon_0],..,[lat_n,lon_n]] with unit of degrees.
+    vertices -> [float 2d array] Vertices of a spherical polygon in format of [[lat_0,lon_0],..,[lat_n,lon_n]] with unit of degrees.
     Vertices can be arranged either counterclockwise or clockwise.
     
     Outputs:
@@ -18,9 +18,9 @@ def polygon_perimeter(polygon):
 
     Note: The spherical polygon has a latitude range of [-90,90] and a longitude range of [-180,180] or [0,360].
     '''
-    lats,lons = polygon[:,0],polygon[:,1]
+    lats,lons = vertices[:,0],vertices[:,1]
 
-    N = len(polygon)
+    N = len(vertices)
     polygon_cartesian = spherical_to_cartesian(np.ones(N),lats*u.deg,lons*u.deg)
     polygon_xyz = np.array(polygon_cartesian).T
 

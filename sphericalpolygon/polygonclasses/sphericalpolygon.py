@@ -9,7 +9,7 @@ class Sphericalpolygon(object):
     class Sphericalpolygon
 
     - attributes:
-        - polygon: vertices of a closed spherical polygon in form of [[lat_0,lon_0],...,[lat_n,lon_n]]
+        - vertices: vertices of a closed spherical polygon in form of [[lat_0,lon_0],...,[lat_n,lon_n]]
         - lats: latitudes of the spherical polygon in degrees
         - lons: longitudes of the spherical polygon in degrees
         - arrangement: vertex arrangement; it can be counterclockwise or clockwise
@@ -21,13 +21,13 @@ class Sphericalpolygon(object):
         - perimeter: calculate the perimeter of a spherical polygon.
     ''' 
 
-    def __init__(self,polygon):
+    def __init__(self,vertices):
 
-        self.polygon = polygon
-        self.lats = polygon[:,0]
-        self.lons = polygon[:,1]
+        self.vertices = vertices
+        self.lats = vertices[:,0]
+        self.lons = vertices[:,1]
 
-        excess = polygon_excess(polygon)
+        excess = polygon_excess(vertices)
         if 0 < excess < 2*np.pi or excess < -2*np.pi: flag = 'Counterclockwise'
         if -2*np.pi < excess < 0 or excess > 2*np.pi: flag = 'Clockwise'
 
@@ -52,14 +52,14 @@ class Sphericalpolygon(object):
         Outputs:
         flags -> [bool or bool array] If True, the point is inside the polygon, otherwise, it is outside.
         '''
-        polygon = self.polygon
+        vertices = self.vertices
         arrangement = self.arrangement
         if np.ndim(points) == 1:
-            return inside_polygon(points,polygon,arrangement)
+            return inside_polygon(points,vertices,arrangement)
         else:
             flags = []
             for point in points:
-                flag = inside_polygon(point,polygon,arrangement)
+                flag = inside_polygon(point,vertices,arrangement)
                 flags.append(flag)
             np.array(flags)
             return flags   	
@@ -80,7 +80,7 @@ class Sphericalpolygon(object):
         Outputs:
         area -> [float] Area of the spherical polygon. It is independent of how the vertices are arranged.
         ''' 
-        return polygon_area(self.polygon)*R**2*rho
+        return polygon_area(self.vertices)*R**2*rho
 
     def inertia(self, R = 1, rho = 1):
         '''
@@ -98,7 +98,7 @@ class Sphericalpolygon(object):
         inertia -> [float array with 6 elements] symmetrical inertia tensor with six independent components.
         The first three components are located diagonally, corresponding to M_{11}, M_{22}, and M_{33}; the last three components correspond to M_{12}, M_{13}, and M_{23}.
         '''
-        return polygon_inertia(self.polygon)*R**4*rho 	
+        return polygon_inertia(self.vertices)*R**4*rho 	
 
     def perimeter(self, R = 1):
         '''
@@ -114,6 +114,6 @@ class Sphericalpolygon(object):
         Outputs:
         perimeter -> [float] Perimeter of the spherical polygon. It is independent of how the vertices are arranged.
         ''' 
-        return polygon_perimeter(self.polygon)*R
+        return polygon_perimeter(self.vertices)*R
 
             

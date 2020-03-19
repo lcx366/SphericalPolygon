@@ -3,16 +3,16 @@ from scipy.spatial.transform import Rotation
 from astropy.coordinates import spherical_to_cartesian,cartesian_to_spherical
 from astropy import units as u
 
-def inside_polygon(point,polygon,arrangement):
+def inside_polygon(point,vertices,arrangement):
     '''
     Determine if a single point is inside a spherical polygon.
 
     Usage: 
-    flag = inside_polygon(point,polygon)
+    flag = inside_polygon(point,vertices)
 
     Inputs:
     point -> [float array with 2 elements] Point to be determined in form of [lat,lon] with unit of degrees.
-    polygon -> [float 2d array] Vertices of a spherical polygon in form of [[lat_0,lon_0],..,[lat_n,lon_n]] with unit of degrees.
+    vertices -> [float 2d array] Vertices of a spherical polygon in form of [[lat_0,lon_0],..,[lat_n,lon_n]] with unit of degrees.
     arrangement -> [str] Arrangement of the vertices. Avaliable options are Counterclockwise and Clockwise.
 
     Outputs:
@@ -20,9 +20,9 @@ def inside_polygon(point,polygon,arrangement):
 
     Note: The spherical polygon has a latitude range of [-90°,-90°] and a longitude range of [-180°,180°] or [0°,360°].
     '''
-    N = len(polygon)
+    N = len(vertices)
     lat0,lon0 = point[0],point[1]
-    lats,lons = polygon[:,0],polygon[:,1]
+    lats,lons = vertices[:,0],vertices[:,1]
 
     # Rotate the single point and polygon so that the North Pole axis passes through the single point.
     transform = Rotation.from_euler('zy', [-lon0,lat0 - 90], degrees=True)

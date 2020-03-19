@@ -3,15 +3,15 @@ from scipy.integrate import dblquad
 from .excess_area import polygon_excess
 from .functions import *
 
-def polygon_inertia(polygon):
+def polygon_inertia(vertices):
     '''
     Calculate the geometrical inertia tensor of a spherical polygon over a unit sphere.
 
     Usage:
-    inertia = polygon_inertia(polygon)
+    inertia = polygon_inertia(vertices)
 
     Inputs:
-    polygon -> [float 2d array] Vertices of the spherical polygon in form of [[lat_0,lon_0],..,[lat_n,lon_n]] with unit of degrees.
+    vertices -> [float 2d array] Vertices of the spherical polygon in form of [[lat_0,lon_0],..,[lat_n,lon_n]] with unit of degrees.
     Vertices can be arranged either counterclockwise or clockwise.
 
     Outputs:
@@ -19,14 +19,14 @@ def polygon_inertia(polygon):
 
     Note: The spherical polygon has a latitude range of [-90°,90°] and a longitude range of [-180°,180°] or [0°,360°].
     ''' 
-    N = len(polygon)
+    N = len(vertices)
     
     # Initialize the 6 components of the geometrical inertia tensor
     sum11,sum22,sum33,sum12,sum13,sum23 = np.zeros(6)
 
     for i in range(N - 1):
-        p1 = np.radians(polygon[i])
-        p2 = np.radians(polygon[i+1]) 
+        p1 = np.radians(vertices[i])
+        p2 = np.radians(vertices[i+1]) 
         
         pdlon = p2[1]-p1[1]
         if pdlon < -np.pi: p2[1] = p2[1] + 2*np.pi 
@@ -52,7 +52,7 @@ def polygon_inertia(polygon):
         sum13 += s13[0] 
         sum23 += s23[0] 
         
-    excess = polygon_excess(polygon)    
+    excess = polygon_excess(vertices)    
   
     # For counterclockwise arrangement
     if excess > 0 and excess < 2*np.pi: 

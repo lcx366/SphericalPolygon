@@ -57,8 +57,9 @@ Calculate the perimeter of a spherical polygon over a unit sphere.
 
 ```python
 >>> print(polygon.perimeter())
->>> print(polygon.area(6378.137), ' km')
-58280032.6500551  km2
+6.322665894174974
+>>> print(polygon.perimeter(6378.137), ' km')
+40326.82927827548  km
 ```
 
 ### Calculate the moment of inertia tensor
