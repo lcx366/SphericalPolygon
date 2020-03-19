@@ -2,6 +2,7 @@ import numpy as np
 from ..inside_polygon import inside_polygon
 from ..excess_area import polygon_excess,polygon_area
 from ..inertia import polygon_inertia
+from ..perimeter import polygon_perimeter
 
 class Sphericalpolygon(object):
     '''
@@ -14,10 +15,11 @@ class Sphericalpolygon(object):
         - arrangement: vertex arrangement; it can be counterclockwise or clockwise
 
     - methods:
-        - contains_points: determine if a single point or multiple points are inside the spherical polygon.
-        - area: calculate the area or mass of the spherical polygon.
-        - inertia: calculate the geometrial or physical moment of inertia tensor of the spherical polygon.
-    '''
+        - contains_points: determine if a single point or multiple points are inside a spherical polygon.
+        - area: calculate the area or mass of a spherical polygon.
+        - inertia: calculate the geometrial or physical moment of inertia tensor of a spherical polygon.
+        - perimeter: calculate the perimeter of a spherical polygon.
+    ''' 
 
     def __init__(self,polygon):
 
@@ -69,6 +71,7 @@ class Sphericalpolygon(object):
         Usage: 
         area = polygon.area()
         area = polygon.area(6378.137)
+        mass = polygon.area(6378.137,81)
 
         Parameters:
         R -> [optional, float, default = 1] sphere radius
@@ -96,5 +99,21 @@ class Sphericalpolygon(object):
         The first three components are located diagonally, corresponding to M_{11}, M_{22}, and M_{33}; the last three components correspond to M_{12}, M_{13}, and M_{23}.
         '''
         return polygon_inertia(self.polygon)*R**4*rho 	
+
+    def perimeter(self, R = 1):
+        '''
+        Calculate the perimeter of a spherical polygon over a sphere with a radius of R. 
+    
+        Usage: 
+        peri = polygon.perimeter()
+        peri = polygon.perimeter(6378.137)
+
+        Parameters:
+        R -> [optional, float, default = 1] sphere radius
+        
+        Outputs:
+        perimeter -> [float] Perimeter of the spherical polygon. It is independent of how the vertices are arranged.
+        ''' 
+        return polygon_perimeter(self.polygon)*R
 
             

@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='sphericalpolygon',
-    version='1.0.1',
+    version='1.1.0',
     long_description_content_type='text/markdown',
     description='A package to handle the spherical polygon',
     long_description=open('README.md', 'rb').read().decode('utf-8'),
