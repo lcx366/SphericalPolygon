@@ -1,6 +1,6 @@
 import numpy as np
 
-# Haversine function
+# half-versed-sine
 def hav(x): 
     return (1 - np.cos(x))/2   
 

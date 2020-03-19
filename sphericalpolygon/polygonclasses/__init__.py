@@ -14,7 +14,8 @@ Class structure:
             - arrangement: vertex arrangement; it can be counterclockwise or clockwise
 
             - methods:
-            - contains_points: determine if a single point or multiple points are inside the spherical polygon.
-            - area: calculate the area of the spherical polygon.
-            - inertia: calculate the inertia tensor of the spherical polygon.
+            - contains_points: determine if a single point or multiple points are inside a spherical polygon.
+            - area: calculate the area of a spherical polygon.
+            - inertia: calculate the inertia tensor of a spherical polygon.
+            - perimeter: calculate the perimeter of a spherical polygon.
 '''
