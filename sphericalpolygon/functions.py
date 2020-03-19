@@ -1,6 +1,6 @@
 import numpy as np
 
-# half-versed-sine
+# Half-versed-sine
 def hav(x): 
     return (1 - np.cos(x))/2   
 

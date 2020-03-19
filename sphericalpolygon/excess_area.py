@@ -1,15 +1,15 @@
 import numpy as np
 from .functions import hav
 
-def polygon_excess(polygon):
+def polygon_excess(vertices):
     '''
     Calculate the signed area of a spherical polygon over a unit sphere. 
     
     Usage: 
-    signed_area = polygon_excess(polygon)
+    signed_area = polygon_excess(vertices)
 
     Inputs:
-    polygon -> [float 2d array] Vertices of the spherical polygon in form of [[lat_0,lon_0],..,[lat_n,lon_n]] with unit of degrees.
+    vertices -> [float 2d array] Vertices of the spherical polygon in form of [[lat_0,lon_0],..,[lat_n,lon_n]] with unit of degrees.
     Vertices can be arranged either counterclockwise or clockwise.
     
     Outputs:
@@ -19,12 +19,12 @@ def polygon_excess(polygon):
     
     Note: The spherical polygon has a latitude range of [-90°,90°] and a longitude range of [-180°,180°] or [0°,360°].
     ''' 
-    N = len(polygon)
+    N = len(vertices)
 
     sum_excess = 0
     
     for i in range(N-1):
-        p1,p2 = np.radians(polygon[i]),np.radians(polygon[i+1]) 
+        p1,p2 = np.radians(vertices[i]),np.radians(vertices[i+1]) 
         pdlat,pdlon = p2[0] - p1[0], p2[1] - p1[1] 
         dlon = np.abs(pdlon) 
         
@@ -48,15 +48,15 @@ def polygon_excess(polygon):
 
     return sum_excess
 
-def polygon_area(polygon):
+def polygon_area(vertices):
     '''
     Calculate the area of a spherical polygon over a unit sphere.
     
     Usage: 
-    area = polygon_area(polygon)
+    area = polygon_area(vertices)
 
     Inputs:
-    polygon -> [float 2d array] Vertices of a spherical polygon in format of [[lat_0,lon_0],..,[lat_n,lon_n]] with unit of degrees.
+    vertices -> [float 2d array] Vertices of a spherical polygon in format of [[lat_0,lon_0],..,[lat_n,lon_n]] with unit of degrees.
     Vertices can be arranged either counterclockwise or clockwise.
     
     Outputs:
@@ -64,7 +64,7 @@ def polygon_area(polygon):
 
     Note: The spherical polygon has a latitude range of [-90,90] and a longitude range of [-180,180] or [0,360].
     ''' 
-    excess = polygon_excess(polygon)
+    excess = polygon_excess(vertices)
     area = np.abs(excess)
     
     if area > 2*np.pi: area = 4*np.pi - area
