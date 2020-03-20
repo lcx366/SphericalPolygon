@@ -38,4 +38,13 @@ def f13(lat,lon):
     return np.cos(lat)**2*np.sin(lat)*np.cos(lon)
 
 def f23(lat,lon): 
-    return np.cos(lat)**2*np.sin(lat)*np.sin(lon)    
+    return np.cos(lat)**2*np.sin(lat)*np.sin(lon)
+
+def fx(lat,lon):
+    return np.cos(lat)**2*np.cos(lon)  
+
+def fy(lat,lon):
+    return np.cos(lat)**2*np.sin(lon)         
+
+def fz(lat,lon):
+    return np.sin(2*lat)/2                        
