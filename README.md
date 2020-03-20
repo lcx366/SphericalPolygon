@@ -28,7 +28,7 @@ Spherical polygons can be created based on a self-defined 2d array in form of `[
 Counterclockwise
 ```
 
-It shows that the orientation of the spherical polygon are counterclockwise. For more details on attributes and methods of the polygon object, please refer to  `polygon?`.
+It shows that the orientation of the spherical polygon is counterclockwise. For more details on attributes and methods of the polygon object, please refer to  `polygon?`.
 
 ### Calculate the area
 
