@@ -3,8 +3,6 @@
 # Welcome to the SphericalPolygon package
 
 The SphericalPolygon package is an archive of scientific routines for handling spherical polygons. Currently, operations on spherical polygons include:
-Currently, operations on spherical polygons include:
-
 1. calculate the area or mass(if the area density is given) 
 2. calculate the perimeter
 3. identify the location of the centroid 
