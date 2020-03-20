@@ -99,9 +99,9 @@ Compute the geometrical moment of inertia tensor of a spherical polygon over a u
 Compute the physical moment of inertia tensor of a spherical polygon with an area density of 81Gt/km2 over a sphere with a radius of 6378.137km. 
 
 ```python
->>> print(polygon.inertia(6378.127,81)/1e12, ' Gt·Gm2')
-[177839.25501653 157466.66651681  48772.37278617  -6830.21381414
-   7032.2786668   10893.9188177 ]  Gt·Gm2
+>>> print(polygon.inertia(6378.137,81)/1e12, ' Gt·Gm2')
+[177840.37032624 157467.65406088  48772.67865958  -6830.25664947
+   7032.32276938  10893.98713835]  Gt·Gm2
 ```
 
 ### Points are inside the polygon？
