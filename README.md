@@ -107,4 +107,4 @@ False
 
 ## Reference
 
-[1] 李春晓.MORVEL 构造板块的转动惯量张量(英文)[J].天文研究与技术,2016,13(01):58-69.
+[1] Chunxiao, Li. "Inertia Tensor for MORVEL Tectonic Plates." *ASTRONOMICAL RESEARCH AND TECHNOLOGY* 13.1 (2016).
