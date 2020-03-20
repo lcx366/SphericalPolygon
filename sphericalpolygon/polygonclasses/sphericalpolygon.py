@@ -1,8 +1,10 @@
 import numpy as np
 from ..inside_polygon import inside_polygon
 from ..excess_area import polygon_excess,polygon_area
-from ..inertia import polygon_inertia
 from ..perimeter import polygon_perimeter
+from ..centroid import polygon_centroid
+from ..inertia import polygon_inertia
+
 
 class Sphericalpolygon(object):
     '''
@@ -17,8 +19,10 @@ class Sphericalpolygon(object):
     - methods:
         - contains_points: determine if a single point or multiple points are inside a spherical polygon.
         - area: calculate the area or mass of a spherical polygon.
-        - inertia: calculate the geometrial or physical moment of inertia tensor of a spherical polygon.
         - perimeter: calculate the perimeter of a spherical polygon.
+        - centroid: identify the location of the centroid of a spherical polygon.
+        - inertia: compute the geometrial or physical moment of inertia tensor of a spherical polygon.
+        
     ''' 
 
     def __init__(self,vertices):
@@ -53,13 +57,13 @@ class Sphericalpolygon(object):
         flags -> [bool or bool array] If True, the point is inside the polygon, otherwise, it is outside.
         '''
         vertices = self.vertices
-        arrangement = self.arrangement
+        orientation = self.orientation
         if np.ndim(points) == 1:
-            return inside_polygon(points,vertices,arrangement)
+            return inside_polygon(points,vertices,orientation)
         else:
             flags = []
             for point in points:
-                flag = inside_polygon(point,vertices,arrangement)
+                flag = inside_polygon(point,vertices,orientation)
                 flags.append(flag)
             np.array(flags)
             return flags   	
@@ -82,6 +86,40 @@ class Sphericalpolygon(object):
         ''' 
         return polygon_area(self.vertices)*R**2*rho
 
+    def perimeter(self, R = 1):
+        '''
+        Calculate the perimeter of a spherical polygon over a sphere with a radius of R. 
+    
+        Usage: 
+        peri = polygon.perimeter()
+        peri = polygon.perimeter(6378.137)
+
+        Parameters:
+        R -> [optional, float, default = 1] sphere radius
+        
+        Outputs:
+        perimeter -> [float] Perimeter of the spherical polygon. It is independent of how the vertices are arranged.
+        ''' 
+        return polygon_perimeter(self.vertices)*R   
+        
+    def centroid(self, R = 1):
+        '''
+        Identify the location of the centroid of a spherical polygon over a sphere with a radius of R. 
+    
+        Usage: 
+        peri = polygon.centroid()
+        peri = polygon.centroid(6378.137)
+
+        Parameters:
+        R -> [optional, float, default = 1] sphere radius
+        
+        Outputs:
+        lat,lon,depth -> [float array with 3 elements] coordinate of the centroid. 
+        Lat and lon are both in degrees; depth should be always positive, which implies the centroid is beneath the 'ground'.
+        ''' 
+        lat,lon,depth = polygon_centroid(self.vertices)
+        return [lat,lon,depth*R]     
+
     def inertia(self, R = 1, rho = 1):
         '''
         Calculate the geometrical or physical(if the area density is given) moment of inertia tensor of a specific spherical polygon over a sphere with a radius of R.
@@ -100,20 +138,5 @@ class Sphericalpolygon(object):
         '''
         return polygon_inertia(self.vertices)*R**4*rho 	
 
-    def perimeter(self, R = 1):
-        '''
-        Calculate the perimeter of a spherical polygon over a sphere with a radius of R. 
-    
-        Usage: 
-        peri = polygon.perimeter()
-        peri = polygon.perimeter(6378.137)
-
-        Parameters:
-        R -> [optional, float, default = 1] sphere radius
-        
-        Outputs:
-        perimeter -> [float] Perimeter of the spherical polygon. It is independent of how the vertices are arranged.
-        ''' 
-        return polygon_perimeter(self.vertices)*R
 
             
