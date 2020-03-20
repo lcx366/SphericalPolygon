@@ -124,13 +124,12 @@ False
 [True, False]
 ```
 
-## Reference
-
-Chunxiao, Li. "Inertia Tensor for MORVEL Tectonic Plates." *ASTRONOMICAL RESEARCH AND TECHNOLOGY* 13.1 (2016).
-
 ### Change log
 
 - **1.2.0 — Mar 20,  2020**
   - Added a `perimeter()`  method that calculates the perimeter of a spherical polygon.
   - Added a `centroid()`  method that determaines the centroid location for a spherical polygon.
 
+## Reference
+
+Chunxiao, Li. "Inertia Tensor for MORVEL Tectonic Plates." *ASTRONOMICAL RESEARCH AND TECHNOLOGY* 13.1 (2016).
