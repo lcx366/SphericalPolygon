@@ -18,7 +18,7 @@ def inside_polygon(point,vertices,arrangement):
     Outputs:
     flag -> [bool] If True, the point is inside the polygon, otherwise, it is outside.
 
-    Note: The spherical polygon has a latitude range of [-90°,-90°] and a longitude range of [-180°,180°] or [0°,360°].
+    Note: The spherical polygon has a latitude range of [-90°,90°] and a longitude range of [-180°,180°] or [0°,360°].
     '''
     N = len(vertices)
     lat0,lon0 = point[0],point[1]
