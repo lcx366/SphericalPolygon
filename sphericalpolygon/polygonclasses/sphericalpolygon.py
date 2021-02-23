@@ -5,7 +5,6 @@ from ..perimeter import polygon_perimeter
 from ..centroid import polygon_centroid
 from ..inertia import polygon_inertia
 
-
 class Sphericalpolygon(object):
     '''
     class Sphericalpolygon
@@ -41,6 +40,64 @@ class Sphericalpolygon(object):
     def __repr__(self):
     
         return 'instance of class Sphericalpolygon'
+
+    def from_array(vertices):   
+        '''
+        Create an instance of class Sphericalpolygon from numpy array.
+    
+        Usage:
+        polygon = Sphericalpolygon.from_array(vertices)
+
+        Inputs:
+        vertices -> [float 2d array] Vertices that make up the polygon in form of [[lat_0,lon_0],...,[lat_n,lon_n]] with unit of degrees. 
+        If the first vertex is not equal to the last one, a point is automatically added to the end of the vertices sequence to form a closed polygon. 
+        Vertices can be arranged either counterclockwise or clockwise.
+
+        Outputs:
+        polygon -> an instance of class Sphericalpolygon 
+
+        Note: The spherical polygon has a latitude range of [-90°,90°] and a longitude range of [-180°,180°] or [0°,360°].
+        '''
+        vertices = np.array(vertices)
+        if (vertices[0] != vertices[-1]).all():
+            vertices = np.append(vertices,[vertices[0]],axis=0) # create a closed spherical polygon
+
+        return Sphericalpolygon(vertices)
+    
+    def from_file(filename,skiprows=0):
+        '''
+        Create an instance of class Sphericalpolygon from a file.
+    
+        Usage:
+        polygon = Sphericalpolygon.from_file(filename,[skiprows])
+
+        Inputs:
+        filename -> [str] input file that lists vertices of a polygon in form of 
+
+            # polygon info, such as name, and soure, etc.
+            # comments
+            #
+            lat_0,lon_0
+            ...
+            lat_n,lon_n 
+
+        with unit of degrees. If the first vertex is not equal to the last one, a point is automatically added to the end of the vertices sequence to form a closed polygon. 
+        Vertices can be arranged either counterclockwise or clockwise.
+
+        Parameters:
+        skiprows -> [int, optional] skip the first `skiprows` lines, including comments; default: 0.
+
+        Outputs:
+        polygon -> an instance of class Sphericalpolygon 
+
+        Note: The spherical polygon has a latitude range of [-90°,90°] and a longitude range of [-180°,180°] or [0°,360°].
+        '''
+        vertices = np.loadtxt(filename,skiprows=skiprows) 
+        if (vertices[0] != vertices[-1]).all():
+            vertices = np.append(vertices,[vertices[0]],axis=0) # create a closed spherical polygon
+
+        return Sphericalpolygon(vertices)
+
 
     def contains_points(self,points):
         '''

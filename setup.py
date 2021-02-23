@@ -3,18 +3,23 @@ from setuptools import setup
 
 setup(
     name='sphericalpolygon',
-    version='1.2.0',
-    long_description_content_type='text/markdown',
+    version='1.2.1',
     description='A package to handle the spherical polygon',
-    long_description=open('README.md', 'rb').read().decode('utf-8'),
-    license='MIT',
     author='Chunxiao Li',
     author_email='lcx366@126.com',
     url='https://github.com/lcx366/SphericalPolygon',
-    classifiers=[
+    license='MIT',
+    long_description_content_type='text/markdown',
+    long_description=open('README.md', 'rb').read().decode('utf-8'),
+    keywords = ['spherical polygon','polygon area','polygon inertia tensor'],
+    python_requires = '>=3.6',
+    classifiers = [
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Education',
         'Intended Audience :: Science/Research',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'License :: OSI Approved :: MIT License',
         ],
     packages=setuptools.find_packages(),
@@ -24,4 +29,4 @@ setup(
         'numpy',
         'astropy'
         ],
-)
+    )

@@ -10,4 +10,4 @@ Currently, operations on spherical polygons include:
     5. determine whether one or more points are inside the spherical polygon.
 '''
 
-from .create_polygon import create_polygon
+from .polygonclasses.sphericalpolygon import Sphericalpolygon
