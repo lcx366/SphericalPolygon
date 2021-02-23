@@ -130,11 +130,11 @@ Compute the physical moment of inertia tensor of the spherical polygon shell wit
 
 
 ```python
-print(polygon.inertia(6371,100*3.1)/1e12, ' Gt·Gm2')
+print(polygon.inertia(6371,100*3.1), ' Gt·km2')
 ```
 
-    [677582.33535848 599961.08075046 185826.79201142 -26023.68204226
-      26793.56591716  41506.73569238]  Gt·Gm2
+    [ 6.77582335e+17  5.99961081e+17  1.85826792e+17 -2.60236820e+16
+      2.67935659e+16  4.15067357e+16]  Gt·km2
 
 
 ### Points are inside a polygon？
