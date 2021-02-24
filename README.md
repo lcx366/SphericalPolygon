@@ -28,6 +28,7 @@ Spherical polygons can be created from a 2d array in form of `[[lat_0,lon_0],..,
 
 ```python
 from sphericalpolygon import Sphericalpolygon
+from astropy import units as u
 # build a spherical polygon for Antarctica Plate
 polygon = Sphericalpolygon.from_file('NnrMRVL_PltBndsLatLon/an',skiprows=1) 
 print(polygon.orientation)
@@ -52,20 +53,23 @@ Calculate the area of the spherical polygon over the Earth with an averaged radi
 
 
 ```python
-print(polygon.area(6371), ' km2')
+Re = 6371*u.km
+print(polygon.area(Re))
 ```
 
-    58149677.38285546  km2
+    58149677.38285546 km2
 
 
-Calculate the mass of the spherical polygon shell with a thickness of 100km and density of 3.1g/cm3 over the Earth with an averaged radius of 6371km.
+Calculate the mass of the spherical polygon shell with a thickness of 100km and density of 3.1g/cm3 over the Earth.
 
 
 ```python
-print(polygon.area(6371,100*3.1), ' Gt')
+thickness, density = 100*u.km, 3.1*u.g/u.cm**3
+rho = thickness * density # area density
+print(polygon.area(Re,rho))
 ```
 
-    18026399988.685192  Gt
+    18026399988.685192 g km3 / cm3
 
 
 ### Calculate the perimeter
@@ -80,14 +84,14 @@ print(polygon.perimeter())
     6.322665894174733
 
 
-Calculate the perimeter of a spherical polygon over the Earth with an averaged radius of 6371km.
+Calculate the perimeter of a spherical polygon over the Earth.
 
 
 ```python
-print(polygon.perimeter(6371), ' km')
+print(polygon.perimeter(Re))
 ```
 
-    40281.70441178723  km
+    40281.70441178723 km
 
 
 ### Identify the centroid
@@ -99,17 +103,17 @@ Identify the centroid of a spherical polygon over a unit sphere.
 print(polygon.centroid())
 ```
 
-    [-83.61081032380656, 57.80052886741483, 0.13827778179537997]
+    (<Quantity -83.61081032 deg>, <Quantity 57.80052887 deg>, 0.13827778179537997)
 
 
-Identify the centroid of a spherical polygon over the Earth with an averaged radius of 6371km.
+Identify the centroid of a spherical polygon over the Earth.
 
 
 ```python
-print(polygon.centroid(6371),' deg deg km')
+print(polygon.centroid(Re))
 ```
 
-    [-83.61081032380656, 57.80052886741483, 880.9677478183658]  deg deg km
+    (<Quantity -83.61081032 deg>, <Quantity 57.80052887 deg>, <Quantity 880.96774782 km>)
 
 
 It shows that the latitude of the centroid is close to the South Pole, and the centroid is located about 881km underground.
@@ -126,15 +130,15 @@ print(polygon.inertia())
     [ 1.32669154  1.17471081  0.36384484 -0.05095381  0.05246122  0.08126929]
 
 
-Compute the physical moment of inertia tensor of the spherical polygon shell with a thickness of 100km and density of 3.1g/cm3 over the Earth with an averaged radius of 6371km.
+Compute the physical moment of inertia tensor of the spherical polygon shell over the Earth.
 
 
 ```python
-print(polygon.inertia(6371,100*3.1), ' Gt·km2')
+print(polygon.inertia(Re,rho))
 ```
 
     [ 6.77582335e+17  5.99961081e+17  1.85826792e+17 -2.60236820e+16
-      2.67935659e+16  4.15067357e+16]  Gt·km2
+      2.67935659e+16  4.15067357e+16] g km5 / cm3
 
 
 ### Points are inside a polygon？

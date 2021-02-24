@@ -1,4 +1,6 @@
 import numpy as np
+from astropy import units as u
+
 from ..inside_polygon import inside_polygon
 from ..excess_area import polygon_excess,polygon_area
 from ..perimeter import polygon_perimeter
@@ -175,7 +177,7 @@ class Sphericalpolygon(object):
         Lat and lon are both in degrees; depth should be always positive, which implies the centroid is beneath the 'ground'.
         ''' 
         lat,lon,depth = polygon_centroid(self.vertices)
-        return [lat,lon,depth*R]     
+        return lat*u.deg,lon*u.deg,depth*R   
 
     def inertia(self, R = 1, rho = 1):
         '''
