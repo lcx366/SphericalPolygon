@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='sphericalpolygon',
-    version='1.2.1',
+    version='1.2.2',
     description='A package to handle the spherical polygon',
     author='Chunxiao Li',
     author_email='lcx366@126.com',

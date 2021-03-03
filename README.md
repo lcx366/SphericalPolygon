@@ -94,6 +94,16 @@ print(polygon.perimeter(Re))
     40281.70441178723 km
 
 
+### Calculate the compactness
+
+
+```python
+print(polygon.compactness())
+```
+
+    0.39900007941415533
+
+
 ### Identify the centroid
 
 Identify the centroid of a spherical polygon over a unit sphere.
@@ -166,7 +176,8 @@ print(polygon.contains_points([[-85,130],[35,70]]))
 
 
 ### Change log
-
+- **1.2.2 — Mar 3,  2021**
+  - Add the `compactness()` method, which reflects the deviation of a polygon from a spherical cap.
 - **1.2.1 — Feb 23,  2021**
   - Replace the function *create_polygon* for building a spherical polygon object from a 2d array with methods `from_array` and `from_file`.
 - **1.2.0 — Mar 20,  2020**

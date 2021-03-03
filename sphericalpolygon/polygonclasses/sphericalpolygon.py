@@ -160,6 +160,20 @@ class Sphericalpolygon(object):
         perimeter -> [float] Perimeter of the spherical polygon. It is independent of how the vertices are arranged.
         ''' 
         return polygon_perimeter(self.vertices)*R   
+
+    def compactness(self):
+        '''
+        Calculate the compactness(circularity) of a spherical polygon, which finds the deviation of a polygon from a spherical cap.
+    
+        Usage: 
+        compactness = polygon.compactness()
+        
+        Outputs:
+        compactness -> [float] a dimensional value. It takes a maximum value of 1 for a spherical cap.
+        ''' 
+        area = self.area()
+        perimeter = self.perimeter()
+        return area/perimeter**2*(4*np.pi-area)
         
     def centroid(self, R = 1):
         '''
