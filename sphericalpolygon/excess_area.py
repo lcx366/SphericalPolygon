@@ -29,7 +29,7 @@ def polygon_excess(vertices):
         dlon = np.abs(pdlon) 
         
         # If two adjacent vertices are close enough(coincident), do nothing. 
-        if dlon < 1e-6: continue 
+        if dlon < 1e-6 and np.abs(pdlat): continue 
 
         # Calculate the area of a spherical triangle consisting of sides and north poles  
         if dlon > np.pi: dlon = 2*np.pi - dlon 
