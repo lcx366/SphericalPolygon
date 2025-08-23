@@ -1,5 +1,4 @@
 import numpy as np
-from astropy import units as u
 
 from ..inside_polygon import inside_polygon
 from ..excess_area import polygon_excess,polygon_area
@@ -24,24 +23,48 @@ class Sphericalpolygon(object):
         - centroid: identify the location of the centroid of a spherical polygon.
         - inertia: compute the geometrial or physical moment of inertia tensor of a spherical polygon.
         
-    ''' 
+    '''
 
-    def __init__(self,vertices):
+    def __init__(self, vertices: np.ndarray):
+        """
+        Initializes a SphericalPolygon instance.
 
+        Inputs:
+            vertices -> [array-like] Polygon vertices with shape (M, 2), where each row is [latitude, longitude] in degrees.
+            The polygon does not need to be explicitly closed.
+        """
         self.vertices = vertices
-        self.lats = vertices[:,0]
-        self.lons = vertices[:,1]
+        self.lats = vertices[:, 0]
+        self.lons = vertices[:, 1]
 
-        excess = polygon_excess(vertices)
-        if 0 < excess < 2*np.pi or excess < -2*np.pi: flag = 'Counterclockwise'
-        if -2*np.pi < excess < 0 or excess > 2*np.pi: flag = 'Clockwise'
+        # Automatic Orientation Detection
+        excess = polygon_excess(self.vertices)
 
-        self.orientation = flag
+        if (0 < excess < 2 * np.pi) or (excess < -2 * np.pi):
+            self.orientation = 'Counterclockwise'
+        elif (-2 * np.pi < excess < 0) or (excess > 2 * np.pi):
+            self.orientation = 'Clockwise'
+        else:
+            self.orientation = 'Undefined'
 
+    def __repr__(self) -> str:
+        """
+        Provides an informative string representation of the SphericalPolygon object.
 
-    def __repr__(self):
-    
-        return 'instance of class Sphericalpolygon'
+        This representation includes the polygon's orientation and whether it contains
+        the North and South celestial poles.
+        """
+        # Define points for the North and South poles.
+        pole_points = np.array([[90.0, 0.0], [-90.0, 0.0]])
+
+        # Check for containment.
+        inside_flags = self.contains_points(pole_points)
+
+        return (
+            f"<SphericalPolygon | ORIENTATION='{self.orientation}', "
+            f"NorthPoleInside={inside_flags[0]}, "
+            f"SouthPoleInside={inside_flags[1]}>"
+        )
 
     def from_array(vertices):   
         '''
@@ -60,11 +83,12 @@ class Sphericalpolygon(object):
 
         Note: The spherical polygon has a latitude range of [-90°,90°] and a longitude range of [-180°,180°] or [0°,360°].
         '''
-        vertices = np.array(vertices)
-        if (vertices[0] != vertices[-1]).all():
-            vertices = np.append(vertices,[vertices[0]],axis=0) # create a closed spherical polygon
+        closed_vertices = np.array(vertices)
+        if (vertices[0] != vertices[-1]).any():
+            # Close the polygon by appending the first vertex to the end.
+            closed_vertices = np.vstack([vertices, vertices[0]])
 
-        return Sphericalpolygon(vertices)
+        return Sphericalpolygon(closed_vertices)
     
     def from_file(filename,skiprows=0):
         '''
@@ -100,32 +124,30 @@ class Sphericalpolygon(object):
 
         return Sphericalpolygon(vertices)
 
-
     def contains_points(self,points):
-        '''
-        Determine if a single point or multiple points are inside the given spherical polygon.
+        """
+        Checks if one or more points are inside this spherical polygon.
 
-        Usage: 
-        flag = polygon.contains_points([30,102])
-        flags = polygon.contains_points([[30,102],[-75,33]])
+        This method serves as a convenient wrapper around the core `inside_polygon`
+        workhorse function, using the polygon's stored vertices and orientation.
 
         Inputs:
-        points -> [float array with 2 elements or float 2d array] single point or multiple points to be determined in form of [lat,lon] or [[lat_0,lon_0],..,[lat_n,lon_n]] with unit of degrees.
+            points -> [np.ndarray] An array of points to check, with shape (N, 2). Each row is [latitude, longitude] in degrees.
 
-        Outputs:
-        flags -> [bool or bool array] If True, the point is inside the polygon, otherwise, it is outside.
-        '''
+        Returns:
+            flags -> [np.ndarray] A boolean array of shape (N,), where `True` indicates the corresponding point is inside the polygon.
+
+        Examples:
+            >>> # Check one point
+            >>> polygon.contains_points([[10, 20]])
+            >>> # Check multiple points
+            >>> test_points = [[10, 20], [50, 50]]
+            >>> polygon.contains_points(test_points)
+        """
         vertices = self.vertices
         orientation = self.orientation
-        if np.ndim(points) == 1:
-            return inside_polygon(points,vertices,orientation)
-        else:
-            flags = []
-            for point in points:
-                flag = inside_polygon(point,vertices,orientation)
-                flags.append(flag)
-            np.array(flags)
-            return flags   	
+        flags = inside_polygon(points,vertices,orientation)
+        return flags
 
     def area(self, R = 1,rho = 1):
         '''
@@ -173,7 +195,7 @@ class Sphericalpolygon(object):
         ''' 
         area = self.area()
         perimeter = self.perimeter()
-        return area/perimeter**2*(4*np.pi-area)
+        return area/perimeter**2*(4*np.pi - area)
         
     def centroid(self, R = 1):
         '''
@@ -191,7 +213,7 @@ class Sphericalpolygon(object):
         Lat and lon are both in degrees; depth should be always positive, which implies the centroid is beneath the 'ground'.
         ''' 
         lat,lon,depth = polygon_centroid(self.vertices)
-        return lat*u.deg,lon*u.deg,depth*R   
+        return lat,lon,depth*R
 
     def inertia(self, R = 1, rho = 1):
         '''

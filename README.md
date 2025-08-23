@@ -4,11 +4,11 @@
 
 The SphericalPolygon package is an archive of scientific routines for handling spherical polygons. Currently, operations on spherical polygons include:
 
-1. calculate the area or mass(if the area density is given) 
-2. calculate the perimeter
-3. identify the centroid 
-4. compute the geometrical or physical moment of inertia tensor
-5. determine whether one or multiple points are inside the spherical polygon
+1. Calculate the area or mass(if the area density is given) 
+2. Calculate the perimeter
+3. Identify the centroid 
+4. Compute the geometrical or physical moment of inertia tensor
+5. Determine whether one or multiple points are inside the spherical polygon
 
 ## How to Install
 
@@ -28,13 +28,12 @@ Spherical polygons can be created from a 2d array in form of `[[lat_0,lon_0],..,
 
 ```python
 from sphericalpolygon import Sphericalpolygon
-from astropy import units as u
 # build a spherical polygon for Antarctica Plate
 polygon = Sphericalpolygon.from_file('NnrMRVL_PltBndsLatLon/an',skiprows=1) 
-print(polygon.orientation)
+print(polygon)
 ```
 
-    Counterclockwise
+    <SphericalPolygon | ORIENTATION='Counterclockwise', NorthPoleInside=False, SouthPoleInside=True>
 
 
 ### Calculate the area
@@ -49,27 +48,18 @@ print(polygon.area())
     1.4326235943514618
 
 
-Calculate the area of the spherical polygon over the Earth with an averaged radius of 6371km.
-
-
-```python
-Re = 6371*u.km
-print(polygon.area(Re))
-```
-
-    58149677.38285546 km2
-
-
 Calculate the mass of the spherical polygon shell with a thickness of 100km and density of 3.1g/cm3 over the Earth.
 
 
 ```python
+from astropy import units as u
+Re = 6371*u.km
 thickness, density = 100*u.km, 3.1*u.g/u.cm**3
 rho = thickness * density # area density
 print(polygon.area(Re,rho))
 ```
 
-    18026399988.685192 g km3 / cm3
+    18026399988.685192 km3 g / cm3
 
 
 ### Calculate the perimeter
@@ -81,17 +71,7 @@ Calculate the perimeter of a spherical polygon over a unit sphere.
 print(polygon.perimeter())
 ```
 
-    6.322665894174733
-
-
-Calculate the perimeter of a spherical polygon over the Earth.
-
-
-```python
-print(polygon.perimeter(Re))
-```
-
-    40281.70441178723 km
+    6.322665941435134
 
 
 ### Calculate the compactness
@@ -101,7 +81,7 @@ print(polygon.perimeter(Re))
 print(polygon.compactness())
 ```
 
-    0.39900007941415533
+    0.39900007344929683
 
 
 ### Identify the centroid
@@ -113,20 +93,10 @@ Identify the centroid of a spherical polygon over a unit sphere.
 print(polygon.centroid())
 ```
 
-    (<Quantity -83.61081032 deg>, <Quantity 57.80052887 deg>, 0.13827778179537997)
+    (-83.61081032380652, 57.80052886741478, 0.13827778179537864)
 
 
-Identify the centroid of a spherical polygon over the Earth.
-
-
-```python
-print(polygon.centroid(Re))
-```
-
-    (<Quantity -83.61081032 deg>, <Quantity 57.80052887 deg>, <Quantity 880.96774782 km>)
-
-
-It shows that the latitude of the centroid is close to the South Pole, and the centroid is located about 881km underground.
+It shows that the centroid is close to the South Pole.
 
 ### Compute the moment of inertia tensor
 
@@ -159,10 +129,10 @@ Determine if a single point or multiple points are inside a given spherical poly
 
 
 ```python
-print(polygon.contains_points([75,152]))
+print(polygon.contains_points([[75,152]]))
 ```
 
-    False
+    [False]
 
 
 #### multiple points
@@ -176,6 +146,8 @@ print(polygon.contains_points([[-85,130],[35,70]]))
 
 
 ### Change log
+- **1.2.3 — Aug 22,  2025**
+  - `inside_polygon` is fully vectorized to handle multiple points and a single polygon efficiently.
 - **1.2.2 — Mar 3,  2021**
   - Add the `compactness()` method, which reflects the deviation of a polygon from a spherical cap.
 - **1.2.1 — Feb 23,  2021**

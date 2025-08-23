@@ -1,6 +1,6 @@
 import numpy as np
-from astropy.coordinates import spherical_to_cartesian
-from astropy import units as u
+
+from .math import spherical_to_cartesian
 
 def polygon_perimeter(vertices): 
     '''
@@ -21,8 +21,7 @@ def polygon_perimeter(vertices):
     lats,lons = vertices[:,0],vertices[:,1]
 
     N = len(vertices)
-    polygon_cartesian = spherical_to_cartesian(np.ones(N),lats*u.deg,lons*u.deg)
-    polygon_xyz = np.array(polygon_cartesian).T
+    polygon_xyz = spherical_to_cartesian(lons,lats,1)
 
     perimeter = 0
     for i in range(N-1):

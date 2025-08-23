@@ -1,9 +1,9 @@
 import numpy as np
 from scipy.integrate import dblquad
-from astropy.coordinates import cartesian_to_spherical
-from astropy import units as u
+
 from .excess_area import polygon_excess
 from .functions import *
+from .math import cartesian_to_spherical
 
 def polygon_centroid(vertices):
     '''
@@ -72,8 +72,7 @@ def polygon_centroid(vertices):
         centroidy = sumy/(4*np.pi + excess)
         centroidz = sumz/(4*np.pi + excess)
 
-    r,lat,lon = cartesian_to_spherical(centroidx,centroidy,centroidz) 
+    lon,lat,r = cartesian_to_spherical(centroidx,centroidy,centroidz)
     depth = 1 - r
-    lat,lon = lat.to(u.deg).value,lon.to(u.deg).value 
      
     return np.array([lat,lon,depth])
